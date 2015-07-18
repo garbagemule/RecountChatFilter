@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: RecountChatFilter
+## Notes: Compacts Recount/Skada spam.
+## Version: 1.0
+## Author: garbagemule
+
+RecountChatFilter.xml
