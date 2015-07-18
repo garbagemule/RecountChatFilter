@@ -6,7 +6,9 @@ I got tired of people spamming their damage/healing meters from Recount/Skada in
 ## Screenshots
 
 Skada (left) and the RecountChatFilter tooltip for the report (right):
+
 ![Skada tooltip](http://garbagemule.github.io/RecountChatFilter/img/skada.jpg)
 
 Recount tooltip:
+
 ![Recount tooltip](http://garbagemule.github.io/RecountChatFilter/img/recount.jpg)
