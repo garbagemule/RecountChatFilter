@@ -187,6 +187,26 @@ ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL",         filter)
 -------------------------------------------------------------------------------
 
 --
+-- Extracts a class color given the left part of a line, or falls back to
+-- swapping between two shades of gray, in case the player or class name
+-- could not be identified.
+--
+local function extractClassColor(index, left)
+  -- Extract the player name and class
+  local player = string.match(left, "%d%.%s(%a+).*")
+  local _, class = UnitClass(player)
+
+  -- If no class, just fallback
+  if not class then
+    if (index % 2 == 0) then return .6, .6, .6 else return .8, .8, .8 end
+  end
+
+  -- Otherwise, grab the default raid class color
+  local color = RAID_CLASS_COLORS[class]
+  return color["r"], color["g"], color["b"]
+end
+
+--
 -- Add the headline and the data lines from the report to the tooltip.
 --
 local function populateTooltip(tooltip, report)
@@ -194,24 +214,15 @@ local function populateTooltip(tooltip, report)
   tooltip:AddLine(report.first, 1, 1, 1, true)
   tooltip:AddLine(" ")
 
-  -- Process each individual line, and switch colors
-  local color = true
-  local line = report.lines
-  while line do
+  -- Process each individual line
+  for i, line in ipairs(report.lines) do
     -- Split it before the first digit, into left and right
-    local left = string.match(line.value, "(%s*[1-9][0-9]?%.%s+[^%d]+).*")
-    local right = string.sub(line.value, #left)
+    local left = string.match(line, "(%s*[1-9][0-9]?%.%s+[^%d]+).*")
+    local right = string.sub(line, #left)
 
-    -- Add the line
-    if color then
-      tooltip:AddDoubleLine(left, right)
-    else
-      tooltip:AddDoubleLine(left, right, 1, 1, 1, 1, 1, 1)
-    end
-
-    -- Swap color, advance to next line
-    color = not color
-    line = line.next
+    -- Call the color extractor, and add the line to the tooltip
+    local r, g, b = extractClassColor(i, left)
+    tooltip:AddDoubleLine(left, right, r, g, b, r, g, b)
   end
 end
 
