@@ -166,19 +166,24 @@ local function filter(frame, event, message, sender, ...)
   return processNextMessage(sender, message), message, sender, ...
 end
 
--- Party/guild/raid
-ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY",        filter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_GUILD",        filter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_OFFICER",      filter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID",         filter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER",  filter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", filter)
-
--- Local channels
-ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY",          filter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER",      filter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL",         filter)
+--
+-- Register the filter for all relevant events on the chat frame.
+--
+local events = {
+  "CHAT_MSG_PARTY",
+  "CHAT_MSG_PARTY_LEADER",
+  "CHAT_MSG_GUILD",
+  "CHAT_MSG_OFFICER",
+  "CHAT_MSG_RAID",
+  "CHAT_MSG_RAID_LEADER",
+  "CHAT_MSG_RAID_WARNING",
+  "CHAT_MSG_SAY",
+  "CHAT_MSG_WHISPER",
+  "CHAT_MSG_YELL"
+}
+for _, event in ipairs(events) do
+  ChatFrame_AddMessageEventFilter(event, filter)
+end
 
 -------------------------------------------------------------------------------
 --
