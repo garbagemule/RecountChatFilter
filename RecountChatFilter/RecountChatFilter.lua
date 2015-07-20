@@ -8,37 +8,6 @@ local function startsWith(text, prefix)
   return text:sub(1, #prefix) == prefix
 end
 
-local function last(list)
-  -- Stop when there is no next link
-  if not list.next then
-    return list
-  end
-  -- Otherwise, keep recursing
-  return last(list.next)
-end
-
-local function append(list, value)
-  -- Create a new link
-  local link = { next = nil, value = value }
-
-  -- Empty list, just return the link
-  if not list then
-    return link
-  end
-  -- Otherwise, append to the list and return the list
-  last(list).next = link
-  return list
-end
-
-local function length(list)
-  -- Stop when we reach the end
-  if not list then
-    return 0
-  end
-  -- Otherwise, +1 and keep recursing
-  return 1 + length(list.next)
-end
-
 -------------------------------------------------------------------------------
 --
 --  Local variables
@@ -104,7 +73,7 @@ local function createTrackerObject(sender, message, addon)
     addon = addon,
     sender = sender,
     first = message,
-    lines = nil
+    lines = {}
   }
 
   -- Store it in the trackers map
@@ -173,7 +142,7 @@ local function processNextMessage(sender, message)
   local tracker = trackers[sender]
 
   -- We expect the next line to be the next numbered message
-  local expected = length(tracker.lines) + 1
+  local expected = table.getn(tracker.lines) + 1
   local match = string.match(message, "%s*(" .. expected .. "%.%s+%a+%s+.*)")
 
   -- If not, just ignore and wait for the timeout to stop tracking the sender
@@ -181,7 +150,7 @@ local function processNextMessage(sender, message)
     return false, message
   end
   -- Otherwise, append the message to the lines list and filter out
-  tracker.lines = append(tracker.lines, message)
+  table.insert(tracker.lines, message)
   return true, message
 end
 
