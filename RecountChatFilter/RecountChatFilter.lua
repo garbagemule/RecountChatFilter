@@ -179,6 +179,7 @@ local events = {
   "CHAT_MSG_RAID_WARNING",
   "CHAT_MSG_SAY",
   "CHAT_MSG_WHISPER",
+  "CHAT_MSG_WHISPER_INFORM",
   "CHAT_MSG_YELL"
 }
 for _, event in ipairs(events) do
