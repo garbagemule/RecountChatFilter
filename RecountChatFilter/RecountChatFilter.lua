@@ -210,8 +210,9 @@ end
 -- Add the headline and the data lines from the report to the tooltip.
 --
 local function populateTooltip(tooltip, report)
-  -- Add the headline, and a bit of padding
+  -- Add the headline, the sender, and a bit of padding
   tooltip:AddLine(report.first, 1, 1, 1, true)
+  tooltip:AddLine("Reported by: " .. report.sender)
   tooltip:AddLine(" ")
 
   -- Process each individual line
