@@ -5,10 +5,10 @@ I got tired of people spamming their damage/healing meters from Recount/Skada in
 
 ## Screenshots
 
-Skada (left) and the RecountChatFilter tooltip for the report (right):
+Damage report from Recount. When RecountChatFilter has access to the players' class information, it will use this information to color the data lines according to the players' classes.
 
-![Skada tooltip](http://garbagemule.github.io/RecountChatFilter/img/skada.jpg)
+![Class colors](http://garbagemule.github.io/RecountChatFilter/img/recount_class_colors.jpg)
 
-Recount tooltip:
+The same damage report from Recount, but with the fallback data line colors when no class information is available.
 
-![Recount tooltip](http://garbagemule.github.io/RecountChatFilter/img/recount.jpg)
+![Fallback colors](http://garbagemule.github.io/RecountChatFilter/img/recount_normal.jpg)
